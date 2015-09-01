@@ -73,6 +73,8 @@ class BlackJackSolver(gameID: Long = (new scala.util.Random).nextLong(), customD
         return memo(startOfHand)
       }
       
+      // Calculate best of all possible outcomes based on
+      // this move
       val valueOfStay = solve(startOfHand, MutableList(dealerCards:_*), MutableList(playerCards:_*), Some(Move.Stay))
       val valueOfHit = solve(startOfHand, MutableList(dealerCards:_*), MutableList(playerCards:_*), Some(Move.Hit))
       

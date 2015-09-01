@@ -14,9 +14,9 @@ object ScalaBlackJack {
   def getCards(seed: Long = (new scala.util.Random) nextLong) = {
     val newDeck = new Deck(seed)
     newDeck.Shuffle
-    val cardArray = newDeck.Cards.map((c:Card)=>jString(c toString))
+    val cardArray = newDeck.Cards.map { c => jString(c toString) }
     
-    Ok(Json.obj("cards" -> jArray(cardArray), "seed" -> jNumber(newDeck.Seed)))
+    Ok(Json.obj("cards" -> jArray(cardArray), "seed" -> jString(newDeck.Seed toString)))
       // necessary because no charset is set by default
       .putHeaders(`Content-Type`(MediaType.`application/json`, Charset.`UTF-8`))
   }
@@ -24,7 +24,7 @@ object ScalaBlackJack {
   def getSolution(seed: Long = (new scala.util.Random).nextLong) = {
     val newDeck = new Deck(seed)
     newDeck.Shuffle
-    val cardArray = newDeck.Cards.map((c:Card)=>jString(c toString))
+    val cardArray = newDeck.Cards.map { c => jString(c toString) }
     
     val solver = new BlackJackSolver(seed)
     val optimalWinnings = solver.solve()
@@ -32,7 +32,7 @@ object ScalaBlackJack {
     //val optimalMoves = solver.parent.foreach(())
     
     Ok(Json.obj("cards" -> jArray(cardArray),
-                "seed" -> jNumber(newDeck.Seed),
+                "seed" -> jString(newDeck.Seed toString),
                 "optimalWinnings" -> jNumber(optimalWinnings)))
       // necessary because no charset is set by default
       .putHeaders(`Content-Type`(MediaType.`application/json`, Charset.`UTF-8`))
